@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
+import 'package:test/design/widgets/accent_button.dart';
 import 'package:test/pages/vehicle/vehicle_item.dart';
 
 class VehicleList extends StatelessWidget {
@@ -8,15 +10,25 @@ class VehicleList extends StatelessWidget {
   Widget build(BuildContext context) {
     return Stack(
       children: [
-        _list(),
-        _updateButton(),
+        _list(context),
+        Align(
+          alignment: Alignment.bottomCenter,
+          child: _updateButton(),
+        ),
       ],
     );
   }
 
-  Widget _list() {
+  Widget _list(BuildContext context) {
+    final safeAreaPadding = MediaQuery.of(context).padding.bottom;
+    final bottomPadding = (safeAreaPadding + 8) * 2 + 40;
     return ListView.separated(
-      padding: const EdgeInsets.only(left: 16, right: 16, top: 16),
+      padding: EdgeInsets.only(
+        left: 16,
+        right: 16,
+        top: 16,
+        bottom: bottomPadding,
+      ),
       itemCount: 15,
       separatorBuilder: (BuildContext context, int index) {
         return const SizedBox(
@@ -30,6 +42,14 @@ class VehicleList extends StatelessWidget {
   }
 
   Widget _updateButton() {
-    return Container();
+    return SafeArea(
+      child: Padding(
+        padding: const EdgeInsets.only(bottom: 8, left: 16, right: 16),
+        child: AcentButton(
+          title: "Update",
+          onTap: () {},
+        ),
+      ),
+    );
   }
 }
